@@ -72,6 +72,7 @@ async function fetchWebApi(endpoint, method, token, body) {
     method,
     body: JSON.stringify(body),
   });
+
   return await res.json();
 }
 
@@ -84,4 +85,15 @@ export async function getTopTracks(token) {
       token
     )
   ).items;
+}
+
+export async function getRecommendations(token, seedArtists, seedTracks) {
+  // Endpoint reference : https://developer.spotify.com/documentation/web-api/reference/get-recommendations
+  return (
+    await fetchWebApi(
+      `v1/recommendations?seed_artists=${seedArtists}&seed_tracks=${seedTracks}&limit=10`,
+      "GET",
+      token
+    )
+  ).tracks;
 }
